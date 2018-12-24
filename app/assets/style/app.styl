@@ -1,0 +1,68 @@
+// Import Vuetify styling
+@require '~vuetify/src/stylus/main.styl'
+.theme--light.application {
+    background: white;
+    color: rgba(0,0,0,0.87);
+}
+
+.article-content
+    font-size: 21px;
+    p 
+        margin-top: 6px;
+        --x-height-multiplier: 0.375;
+        --baseline-multiplier: 0.17;
+        letter-spacing: .01rem;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 21px;
+        line-height: 1.58;
+        letter-spacing: -.003em;
+    h1,h2,h3
+        margin-top: 39px
+    code
+        width: 100%
+        background: none
+        padding: 1rem
+    blockquote
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 40px;
+        margin-inline-end: 40px;
+        margin-top: 38px
+        --x-height-multiplier: 0.375;
+        --baseline-multiplier: 0.17;
+        letter-spacing: .01rem;
+        font-weight: 400;
+        font-style: italic;
+        font-size: 21px;
+        line-height: 1.58;
+        letter-spacing: -.003em;
+        border-left: 3px solid rgba(0,0,0,.84);
+        padding-left: 20px;
+        margin-left: -23px;
+        padding-bottom: 2px;
+        p 
+            @extend .font-italic;
+            margin-bottom: 0
+    ul,ol
+        margin-top: 29px
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        padding-inline-start: 40px;
+        li 
+            --x-height-multiplier: 0.375;
+            --baseline-multiplier: 0.17;
+            letter-spacing: .01rem;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 21px;
+            line-height: 1.58;
+            letter-spacing: -.003em;
+            margin-left: 30px;
+            margin-bottom: 14px;
+            display: list-item;
+            text-align: -webkit-match-parent;

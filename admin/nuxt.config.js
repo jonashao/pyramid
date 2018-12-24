@@ -52,7 +52,7 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'http://localhost:8000/'
+    baseURL: 'http://120.78.221.76:8000/'
   },
 
   /*

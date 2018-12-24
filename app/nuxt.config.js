@@ -36,7 +36,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/vuetify', '@/plugins/highlight', '@/plugins/lazyload'],
+  plugins: ['@/plugins/vuetify', '@/plugins/highlight'],
 
   /*
   ** Nuxt.js modules
@@ -50,7 +50,7 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'http://localhost:8000/'
+    baseURL: 'http://120.78.221.76:8000/'
   },
 
   /*

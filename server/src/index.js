@@ -51,7 +51,8 @@ app.use(cors())
 // export default router;
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(8000);
+const port = process.env.PORT || 8000
+app.listen(port);
 
 app.on("error", onError);
 app.on("listening", onListening);

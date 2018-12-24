@@ -45,8 +45,12 @@ export default {
     })
     let { error, info } = result.data
     // console.log('info', info)
-    let { content, des, list, time, title } = info[0]
-    return { title, des, content, list, time }
+    if (info && info.length) {
+      let { content, des, list, time, title } = info[0]
+      return { title, des, content, list, time }
+    } else {
+      return { title: '', des: '', content: '', list: '', time: '' }
+    }
   }
   //   head() {
   //     return {
@@ -59,8 +63,8 @@ export default {
   //   }
 }
 </script>
-<style scoped lang='less'>
-.article-content /deep/ img {
+<style scoped >
+.article-content >>> img {
   display: block;
   max-width: 100%;
 }

@@ -66,7 +66,7 @@ export default {
 
     this.$router.push({
       name: 'post-id',
-      params: { id: '5c1f7284b5719be0638a2952' }
+      params: { id: '5c210c7ccf62ea4d75352133' }
     })
   }
 }

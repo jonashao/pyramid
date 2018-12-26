@@ -28,57 +28,24 @@
       app
     >
       <v-toolbar-side-icon @click="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'" />
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>web</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>remove</v-icon>
-      </v-btn>
+     
       <v-toolbar-title v-text="title"/>
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>menu</v-icon>
-      </v-btn>
+     
     </v-toolbar>
     <v-content>
       <v-container>
         <nuxt />
+        <v-snackbar v-model="snackbarShow" >
+          {{ snackbar.text }}
+          <v-btn dark flat @click="snackbarShow = false" >
+            好的
+          </v-btn>
+        </v-snackbar>
       </v-container>
     </v-content>
-    <v-navigation-drawer
-      :right="right"
-      v-model="rightDrawer"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-tile @click.native="right = !right">
-          <v-list-tile-action>
-            <v-icon light>compare_arrows</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer
-      :fixed="fixed"
-      app
-    >
-      <span>&copy; 2017</span>
+
+    <v-footer :fixed="fixed" app >
+      <span>&copy; 2019</span>
     </v-footer>
   </v-app>
 </template>
@@ -91,16 +58,41 @@ export default {
       drawer: true,
       fixed: false,
       items: [
-        { icon: 'apps', title: 'Welcome', to: '/admin' },
+        { icon: 'apps', title: '欢迎', to: '/admin' },
         { icon: 'bubble_chart', title: '文章', to: '/admin/article' },
-        { icon: 'bookmark', title: '列表', to: '/admin/list' },
-        { icon: 'assessment', title: '版本', to: '/admin/version' }
+        { icon: 'bookmark', title: '列表', to: '/admin/category' }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Blog管理系统',
+      snackbarShow: false
     }
+  },
+  computed: {
+    snackbar: {
+      get: function() {
+        return this.$store.state.snackbar
+      }
+    }
+  },
+  watch: {
+    snackbarShow(newvalue, oldvalue) {
+      console.log('snackbar show status')
+      if (newvalue !== oldvalue) {
+        this.$store.commit('snackbar/setState', { show: newvalue })
+      }
+    }
+  },
+  created() {
+    this.$store.watch(
+      state => state.snackbar.snackbar,
+      () => {
+        console.log('state change', this.$store.state.snackbar)
+        if (this.snackbarShow !== this.$store.state.snackbar.snackbar)
+          this.snackbarShow = this.$store.state.snackbar.snackbar
+      }
+    )
   }
 }
 </script>

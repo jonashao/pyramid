@@ -1,4 +1,4 @@
-const frontArticle = require('../models/frontArticleSchema');
+const ArticleModel = require('../models/article');
 const backArticle = require('../models/backArticleSchema');
 
 /**
@@ -10,10 +10,9 @@ const backArticle = require('../models/backArticleSchema');
 
 let delArticle = async (ctx,next)=> {
 	try{
-		let req = ctx.request.body;
-	    let {id,list} = req;
-	    let db = list == 'Front' ? frontArticle : backArticle;
-		let res = await db.remove({_id:id});
+		const id = ctx.params.id
+		console.log('id',id)
+		let res = await ArticleModel.deleteOne({_id:id});
 		let {n,ok} = res;
 		ctx.body = {
 			del:n,

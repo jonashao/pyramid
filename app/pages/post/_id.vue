@@ -1,6 +1,6 @@
 <template>
   <div class="section-column">
-    <h1 @click="getPostInfo">{{ title }}</h1>
+    <h1 >{{ title }}</h1>
     <div>{{ time }}</div>
 
     <div>{{ des }}</div>
@@ -40,7 +40,7 @@ export default {
 
   async asyncData({ app, params }) {
     let json = { id: params.id }
-    let result = await app.$axios.get(`api/article/getFrontArticleInfo`, {
+    let result = await app.$axios.get(`/article/content/${params.id}`, {
       params: json
     })
     let { error, info } = result.data

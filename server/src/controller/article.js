@@ -1,4 +1,5 @@
 const frontArticle = require('../models/frontArticleSchema');
+const ArticleModel = require('../models/article');
 const backArticle = require('../models/backArticleSchema');
 const fs = require('fs');
 /**
@@ -7,6 +8,43 @@ const fs = require('fs');
  * @param {object} 接收发布文章接口传递对象值
  * @return {object|null}  insert Front article
 */
+
+let save = async (ctx) => {
+	try{
+		let req = ctx.request.body;	
+		let {id,title,htmlContent,date,des,original,category} = req;
+
+		req.content = req.htmlContent;
+		req.time = req.date;
+		const article = new ArticleModel(req);
+		// console.log('res',article)
+		// article.markModified('content')
+		if(!id){
+			let res=  await article.save()
+			ctx.body = {
+				error:0,
+				success: res!=null
+			}
+		}else{
+			const front = await ArticleModel.updateOne({_id:id},
+				{$set:{category,title,content:htmlContent,time:date,des,original}},{upsert:true});
+			// console.log('result',front)
+			let {ok} = front;
+			ctx.body = {
+				error:0,
+				success: ok
+			}
+		}
+	}catch(e){
+		console.error('update fail ',e)
+
+		ctx.body = {
+			error:1,
+			info:e
+		}
+	}
+}
+
 
 let insertArticle = async (ctx) => {
 	try{
@@ -67,6 +105,23 @@ let articleInfo = async (ctx,next)=>{
 		let req = ctx.request.query;
 		let {id} = req;
 		let result = await frontArticle.find({_id:id});
+		ctx.body = {
+			error:0,
+			info:result
+		}
+	}catch(e){
+		ctx.body = {
+			error:1,
+			error:e
+		}
+	}
+}
+
+let content = async (ctx,next)=>{
+	try{
+		let req = ctx.request.query;
+		let {id} = req;
+		let result = await ArticleModel.find({_id:id});
 		ctx.body = {
 			error:0,
 			info:result
@@ -145,6 +200,8 @@ const deleteFile = async (ctx) => {
     }
 }
 module.exports = {
+	save,
+	content,
 	insertArticle,
 	getArticle,
 	articleInfo,

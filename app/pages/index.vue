@@ -35,7 +35,7 @@ export default {
     return { posts: [] }
   },
   mounted() {
-    this.$axios.get('/article/list/').then(({ data, status }) => {
+    this.$axios.get('/article/list').then(({ data, status }) => {
       console.log(data)
       this.posts = data.list
       console.log(this.posts)
@@ -51,6 +51,7 @@ export default {
 
 <style>
 .post-card {
+  max-width: 100%;
   width: 700px;
   margin-bottom: 1rem;
 }

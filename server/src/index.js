@@ -1,5 +1,7 @@
 
 require('babel-register');
+require('dotenv').config()
+
 const Koa = require("koa");
 const app = new Koa();
 const cors = require('koa-cors');

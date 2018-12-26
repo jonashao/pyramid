@@ -5,8 +5,7 @@
       :clipped="clipped"
       v-model="drawer"
       fixed
-      app
-    >
+      app >
       <v-list>
         <v-list-tile
           v-for="(item, i) in items"
@@ -27,7 +26,11 @@
     <v-toolbar :clipped-left="clipped" fixed scroll-off-screen app >
       <v-toolbar-side-icon @click="drawer = !drawer" />
 
-      <v-toolbar-title v-text="title"/>
+      <v-toolbar-title>
+        <v-btn :to="'/'" flat>
+          {{ title }}
+        </v-btn>
+      </v-toolbar-title>
     
     </v-toolbar>
     <v-content>

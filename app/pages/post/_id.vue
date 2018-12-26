@@ -67,6 +67,8 @@ export default {
 .article-content >>> img {
   display: block;
   max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .section-column {
   width: 100%;

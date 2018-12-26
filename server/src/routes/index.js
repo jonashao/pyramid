@@ -10,6 +10,9 @@ const category = require('../controller/category');
 const version = require('../controller/version');
 const LoginStrategy = require('../controller/login');
 const system = require('../controller/system');
+
+const cos = require('../controller/cos');
+
 const multer = require('koa-multer');
 //配置
 const storage = multer.diskStorage({
@@ -59,4 +62,6 @@ router.post('/upload',upload.single('file'), article.uploadFile);
 /*删除图片接口*/
 router.post('/deleteFile', article.deleteFile)
 
+
+router.get('/cos/sign',cos.sign)
 module.exports = router;

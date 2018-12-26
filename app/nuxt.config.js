@@ -36,7 +36,11 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/vuetify', '@/plugins/highlight'],
+  plugins: [
+    '@/plugins/vuetify',
+    '@/plugins/highlight',
+    { src: '@/plugins/lazyload', ssr: true }
+  ],
 
   /*
   ** Nuxt.js modules
@@ -63,6 +67,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
+    vendor: ['vuetify', 'axios', 'vue-lazyload'],
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {

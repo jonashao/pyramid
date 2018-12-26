@@ -1,69 +1,96 @@
 <template>
-  <v-layout row>
-    <v-flex xs19>
-
-      <v-text-field
-        v-model="article.title"
-        :rules="nameRules"
-        :counter="200"
-        label="撰写新文章" placeholder="在此输入文章标题" name="title" class="article_title"
-        required
-      />
-
-      <v-text-field
-        v-model="article.des"
-        :rules="nameRules"
-        :counter="200"
-        label="文章简介" placeholder="在此输入文章简介" name="title" class="article_title"
-        required
-      />
-
-      <v-select
-        v-model="article.category"
-        :items="categorys"
-        item-text="name"
-        item-value="_id"
-        label="文章集合"
-      />
-   
-      <v-menu
-        ref="menu"
-        :close-on-content-click="false"
-        v-model="menu"
-        :nudge-right="40"
-        lazy
-        transition="scale-transition"
-        offset-y
-        full-width
-        min-width="290px"
-      >
+  <div>
+    <v-layout row wrap>
+      <v-flex xs12>
         <v-text-field
-          slot="activator"
-          v-model="article.date"
-          label="Birthday date"
-          prepend-icon="event"
-          readonly
+          v-model="article.title"
+          :rules="nameRules"
+          :counter="200"
+          label="撰写新文章" placeholder="在此输入文章标题" name="title" class="article_title"
+          required
         />
-        <v-date-picker
-          ref="picker"
-          v-model="article.date"
-          :max="new Date().toISOString().substr(0, 10)"
-          min="1950-01-01"
-          @change="save"
+      </v-flex>
+      <v-flex xs12>
+        <v-text-field
+          v-model="article.author"
+          :counter="100"
+          label="作者" placeholder="在此输入文章作者" name="author"
         />
-      </v-menu>
+      </v-flex>
+      <v-flex xs12>
+        <v-textarea
+          v-model="article.des"
+          :counter="250"
+          outline
+          label="文章简介" placeholder="在此输入文章简介" name="description"
+        />
+      </v-flex>
+      <v-flex xs12 md6>
+        <v-select
+          v-model="article.category"
+          :items="categorys"
+          item-text="name"
+          item-value="_id"
+          label="文章集合"
+        />
+      </v-flex>
+      <v-flex xs12 md6>
 
-  
-
-      <mavon-editor v-model="article.content" class="article_content" font-size="18px" placeholder="开始编写文章内容..." 
-                    style="min-height:600px;max-height:80vh" 
-                    @change="changeContent" />
-      <v-btn type="success" class="article_button" @click="submitArticle">发布文章</v-btn>
-    </v-flex>
-
-
-  
-  </v-layout>
+        <v-menu
+          ref="menu"
+          :close-on-content-click="false"
+          v-model="menu"
+          :nudge-right="40"
+          lazy
+          transition="scale-transition"
+          offset-y
+          full-width
+          min-width="290px"
+        >
+          <v-text-field
+            slot="activator"
+            v-model="article.date"
+            label="Birthday date"
+            prepend-icon="event"
+            readonly
+          />
+          <v-date-picker
+            ref="picker"
+            v-model="article.date"
+            :max="new Date().toISOString().substr(0, 10)"
+            min="1950-01-01"
+            @change="save"
+          />
+        </v-menu>
+      </v-flex>
+      <v-flex xs12>
+        <mavon-editor ref="md" v-model="article.content" 
+                      class="article_content" font-size="18px" 
+                      placeholder="开始编写文章内容..." 
+                      style="min-height:600px;max-height:80vh" @imgAdd="imgAdd"
+                      @change="changeContent" />
+      </v-flex>
+      <v-flex xs12>
+        <v-text-field
+          v-model="article.originUrl"
+          :counter="300"
+          solo clearable
+          label="原文地址" placeholder="如非原创,在此输入原文地址" name="originUrl"
+        />
+      </v-flex>
+    </v-layout>
+    <v-btn
+      dark
+      fab
+      fixed
+      color="pink"
+      bottom
+      right
+      @click="submitArticle">
+      <v-icon>send</v-icon>
+      <v-icon>close</v-icon>
+    </v-btn>
+  </div>
 </template>
 
 <script>
@@ -75,6 +102,7 @@ export default {
       menu: false,
       article: {
         title: '',
+        author: '',
         content: '',
         htmlContent: '',
         date: FormatDate(new Date()),
@@ -82,6 +110,7 @@ export default {
         contentValue: '',
         des: '',
         original: '',
+        originUrl: '',
         id: ''
       },
       img: {
@@ -122,20 +151,36 @@ export default {
       this.$axios
         .get(`/article/content/${id}`, { params: { id } })
         .then(({ data }) => {
-          // console.log('res', res)
-          let {
-            info: [{ _id, title, des, original, time, list, category }]
-          } = data
-          console.log(data)
-          Object.assign(this.article, {
-            id: _id,
-            title,
-            des,
-            content: original,
-            date: time ? time : FormatDate(new Date()),
-            category: list,
-            category
-          })
+          this.article = data.info[0]
+          this.article.date = this.article.time ? this.article.time : new Date()
+          this.article.id = this.article._id
+          this.article.content = this.article.original
+          console.log('article', this.article)
+          // let {
+          //   info: [
+          //     {
+          //       _id,
+          //       title,
+          //       author,
+          //       originUrl,
+          //       des,
+          //       original,
+          //       time,
+          //       list,
+          //       category
+          //     }
+          //   ]
+          // } = data
+          // console.log(data)
+          // Object.assign(this.article, {
+          //   id: _id,
+          //   title,
+          //   des,
+          //   content: original,
+          //   date: time ? time : FormatDate(new Date()),
+          //   category: list,
+          //   category
+          // })
           this.defaultRequest()
         })
     },
@@ -151,7 +196,6 @@ export default {
     },
     error(title, content, nodesc) {
       this.$store.commit('snackbar/setState', { show: true, text: title })
-
       // this.$Notice.error({
       //   title: title,
       //   desc: nodesc ? '' : content
@@ -164,7 +208,6 @@ export default {
       //   desc: nodesc ? '' : content
       // })
     },
-
     insertArticle() {
       if (this.article.title == '') {
         this.error('文章标题留空无法保存', '请仔细检查文章标题', false)
@@ -172,6 +215,7 @@ export default {
         this.$axios.post(`/article/save`, this.article).then(res => {
           let { error } = res.data
           if (Object.is(error, 0)) {
+            this.$router.push({ name: 'admin-category' })
             this.success('文章发布成功', '', true)
             ;[this.title, this.des, this.original, this.content] = ['']
           } else {
@@ -196,12 +240,30 @@ export default {
       //     filename: result.imgFileName
       //   })
       // }
+    },
+    imgAdd(pos, file) {
+      var formdata = new FormData()
+      // formdata.append('image', $file)
+      this.$cos.cUploadFile({ file }).then(location => {
+        this.$refs.md.$img2Url(pos, location)
+      })
+      // axios({
+      //   url: 'server url',
+      //   method: 'post',
+      //   data: formdata,
+      //   headers: { 'Content-Type': 'multipart/form-data' }
+      // }).then(url => {
+      //   // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+      //   // $vm.$img2Url 详情见本页末尾
+      //   $vm.$img2Url(pos, url)
+      // })
     }
   }
 }
 /*封装格式化日期*/
 function FormatDate(strTime) {
   var date = new Date(strTime)
-  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
+  // return date
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 }
 </script>

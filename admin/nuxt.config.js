@@ -38,7 +38,11 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/vuetify', { src: '~plugins/mavon-editor', ssr: false }],
+  plugins: [
+    '@/plugins/vuetify',
+    '@/plugins/cos',
+    { src: '~plugins/mavon-editor', ssr: false }
+  ],
 
   /*
   ** Nuxt.js modules
@@ -56,8 +60,8 @@ module.exports = {
       process.env.NODE_ENV === 'production'
         ? 'http://120.78.221.76:8000/api'
         : 'http://localhost:8000/api'
+    // 'http://120.78.221.76:8000/api'
   },
-
   /*
   ** Build configuration
   */

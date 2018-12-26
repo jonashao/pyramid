@@ -45,6 +45,18 @@
    
 
     </v-layout>
+
+    <v-btn
+      dark
+      fab
+      fixed
+      bottom
+      right
+      to="/admin/article"
+    >
+      <v-icon>add</v-icon>
+      <v-icon>close</v-icon>
+    </v-btn>
   </div>
 </template>
 

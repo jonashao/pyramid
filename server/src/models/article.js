@@ -11,6 +11,8 @@ let articleSchema = new mongoose.Schema({
 	list:String,
     banner: String,
 	imgFileName: String,
+	author:String,
+	originUrl:String,
 	category: {
 		type: Schema.Types.ObjectId,
 		ref: 'category'

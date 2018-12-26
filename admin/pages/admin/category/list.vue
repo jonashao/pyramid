@@ -49,10 +49,6 @@
       </v-layout>
     </v-container>
  
-
-
-
-
     <v-layout row justify-center>
       <v-dialog v-model="dialog" persistent max-width="600px">
         <v-btn slot="activator" fab dark style="position: fixed;right: 2rem;">

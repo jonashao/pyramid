@@ -1,8 +1,10 @@
 <template>
   <div class="login_images" grid-list-md text-xs-center>
     <v-layout row wrap>
-      <v-flex xs6 offset-xs20>
-        <v-card style="float:right;margin-top:20%;">
+      <v-flex xs10 offset-xs1 sm5 offset-sm4 
+              md3 
+              offset-md7> 
+        <v-card style="margin-top:20%;">
           <v-img
             src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
             aspect-ratio="2.75"

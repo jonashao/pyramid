@@ -16,6 +16,10 @@ let articleSchema = new mongoose.Schema({
 	category: {
 		type: Schema.Types.ObjectId,
 		ref: 'category'
+	},
+	image:{
+		url: String,
+		name: String
 	}
 });
 

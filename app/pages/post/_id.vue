@@ -1,9 +1,16 @@
 <template>
   <div class="section-column">
-    <h1 >{{ title }}</h1>
-    <div>{{ time }}</div>
-
-    <div>{{ des }}</div>
+    <div class="title-block">
+      <h1 >{{ title }}</h1>
+      <div>{{ time }}</div>
+      <div v-if="originUrl"><span>转载自:</span><a :href="originUrl" style="color:green; font-weight:bold">{{ originUrl }}</a> </div>
+    </div>
+ 
+    <v-img v-if="image" 
+           :src="image.url"
+           :alt="image.name"
+           contain />
+    <div class="desc">{{ des }}</div>
 
     <div class="article-content" v-html="content"/>
     <!-- <nav-header :active="active"/> -->
@@ -26,41 +33,28 @@
 </template>
 
 <script>
-// import NavHeader from '~/components/NavHeader.vue'
-// import { baseurl } from '~/plugins/url.js'
 export default {
-  //   components: {
-  //     NavHeader
-  //   },
-  //   data() {
-  //     return {
-  //       active: 'index'
-  //     }
-  //   },
-
   async asyncData({ app, params }) {
     let json = { id: params.id }
     let result = await app.$axios.get(`/article/content/${params.id}`, {
       params: json
     })
     let { error, info } = result.data
-    // console.log('info', info)
+    console.log('info', info)
     if (info && info.length) {
-      let { content, des, list, time, title } = info[0]
-      return { title, des, content, list, time }
+      let { content, des, list, time, title, image, originUrl } = info[0]
+      return { title, des, content, list, time, image, originUrl }
     } else {
-      return { title: '', des: '', content: '', list: '', time: '' }
+      return {
+        title: '',
+        des: '',
+        content: '',
+        list: '',
+        time: '',
+        image: null
+      }
     }
   }
-  //   head() {
-  //     return {
-  //       title: this.title,
-  //       meta: [
-  //         { hid: 'description', name: 'description', content: `${this.des}` },
-  //         { hid: 'author', content: 'brian' }
-  //       ]
-  //     }
-  //   }
 }
 </script>
 <style scoped >
@@ -77,5 +71,26 @@ export default {
   padding-right: 20px;
   margin-left: auto;
   margin-right: auto;
+}
+@media (max-width: 600px) {
+  .section-column {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .v-image {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+}
+
+.title-block {
+  margin-bottom: 1rem;
+}
+
+.desc {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: rgb(128, 128, 128);
 }
 </style>

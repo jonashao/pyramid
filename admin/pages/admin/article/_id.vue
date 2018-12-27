@@ -11,6 +11,13 @@
         />
       </v-flex>
       <v-flex xs12>
+        <mavon-editor ref="md" v-model="article.content" 
+                      class="article_content" font-size="18px" 
+                      placeholder="开始编写文章内容..." 
+                      style="min-height:600px;max-height:80vh" @imgAdd="imgAdd"
+                      @change="changeContent" />
+      </v-flex>
+      <v-flex xs12>
         <v-text-field
           v-model="article.author"
           :counter="100"
@@ -24,6 +31,18 @@
           outline
           label="文章简介" placeholder="在此输入文章简介" name="description"
         />
+      </v-flex>
+
+      <v-flex v-if="article.image" xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+        <img v-if="article.image &&article.image.url" :src="article.image.url" height="150">
+        <v-text-field v-model="article.image.name" label="Select Image" prepend-icon="attach_file" @click="pickFile"/>
+        <input
+          ref="image"
+          type="file"
+          style="display: none"
+          accept="image/*"
+          @change="onFilePicked"
+        >
       </v-flex>
       <v-flex xs12 md6>
         <v-select
@@ -50,7 +69,7 @@
           <v-text-field
             slot="activator"
             v-model="article.date"
-            label="Birthday date"
+            label="发表日期"
             prepend-icon="event"
             readonly
           />
@@ -63,13 +82,7 @@
           />
         </v-menu>
       </v-flex>
-      <v-flex xs12>
-        <mavon-editor ref="md" v-model="article.content" 
-                      class="article_content" font-size="18px" 
-                      placeholder="开始编写文章内容..." 
-                      style="min-height:600px;max-height:80vh" @imgAdd="imgAdd"
-                      @change="changeContent" />
-      </v-flex>
+  
       <v-flex xs12>
         <v-text-field
           v-model="article.originUrl"
@@ -100,6 +113,9 @@ export default {
   data() {
     return {
       menu: false,
+      imageName: '',
+      imageFile: '',
+      imageUrl: '',
       article: {
         title: '',
         author: '',
@@ -111,7 +127,11 @@ export default {
         des: '',
         original: '',
         originUrl: '',
-        id: ''
+        id: '',
+        image: {
+          name: '',
+          url: ''
+        }
       },
       img: {
         path: '',
@@ -155,6 +175,9 @@ export default {
           this.article.date = this.article.time ? this.article.time : new Date()
           this.article.id = this.article._id
           this.article.content = this.article.original
+          if (!this.article.image) {
+            this.article.image = { name: '', url: '' }
+          }
           console.log('article', this.article)
           // let {
           //   info: [
@@ -211,6 +234,8 @@ export default {
     insertArticle() {
       if (this.article.title == '') {
         this.error('文章标题留空无法保存', '请仔细检查文章标题', false)
+      } else if (!this.article.category) {
+        this.error('请选择文章分类', false)
       } else {
         this.$axios.post(`/article/save`, this.article).then(res => {
           let { error } = res.data
@@ -257,6 +282,37 @@ export default {
       //   // $vm.$img2Url 详情见本页末尾
       //   $vm.$img2Url(pos, url)
       // })
+    },
+    pickFile() {
+      this.$refs.image.click()
+    },
+
+    onFilePicked(e) {
+      const files = e.target.files
+      if (files[0] !== undefined) {
+        this.imageName = files[0].name
+        if (this.imageName.lastIndexOf('.') <= 0) {
+          return
+        }
+        const fr = new FileReader()
+        fr.readAsDataURL(files[0])
+        fr.addEventListener('load', () => {
+          this.$cos.cUploadFile({ file: files[0] }).then(location => {
+            this.imageUrl = location
+            this.article.image = {
+              url: this.imageUrl,
+              name: files[0].name
+            }
+            console.log('article', this.article)
+          })
+
+          this.imageFile = files[0] // this is an image file that can be sent to server...
+        })
+      } else {
+        this.imageName = ''
+        this.imageFile = ''
+        this.imageUrl = ''
+      }
     }
   }
 }

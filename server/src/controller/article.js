@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 let save = async (ctx) => {
 	try{
 		let req = ctx.request.body;	
-		let {id,title,htmlContent,date,des,original,category,originUrl,author} = req;
+		let {id,title,htmlContent,date,des,original,category,originUrl,author,image} = req;
 
 		console.log(req)
 		req.content = req.htmlContent;
@@ -22,7 +22,7 @@ let save = async (ctx) => {
 			id = null
 		}
 		const result = await ArticleModel.updateOne({_id:mongoose.Types.ObjectId(id)},
-			{$set:{category,title,content:htmlContent,time:date,des,original,originUrl,author}},{upsert:true});
+			{$set:{category,title,content:htmlContent,time:date,des,original,originUrl,author,image}},{upsert:true});
 		let {ok} = result;
 		ctx.body = {
 			error:0,
@@ -45,6 +45,7 @@ let content = async (ctx,next)=>{
 		let req = ctx.request.query;
 		let {id} = req;
 		let result = await ArticleModel.find({_id:id});
+		console.log('result',result)
 		ctx.body = {
 			error:0,
 			info:result
@@ -57,60 +58,7 @@ let content = async (ctx,next)=>{
 	}
 }
 
-/**
- *private API
- *@param {string|null} id
- *@param {string|null} radio
- *@return {object} return upload list
- */
-
-const uploadFile = async (ctx) => {
-    try {
-        let req = ctx.req.body;
-        let file = ctx.req.file;
-        let db = await Object.is(req.radio, 'Front') ? frontArticle : backArticle
-        let path = `http://${ctx.headers.host}/uploads/${file.filename}`
-        let result = await db.update({_id: req.id }, {$set: {banner: path, imgFileName:file.filename}},{upsert:true})
-        ctx.status = 200
-        ctx.body = {
-            status: ctx.status,
-            filename: file.filename,
-            path,
-            result
-        }
-    } catch (error) {
-        ctx.body = error
-    }
-}
-
-
-/**
- *private API
- *@param {string|null} id
- *@param {string|null} radio
- *@return {object} return deleteFile
- */
-const deleteFile = async (ctx) => {
-    try {
-        let request = ctx.request.body
-        let db = await Object.is(request.radio, 'Front') ? frontArticle : backArticle
-        let { imgFileName } = await db.findById({_id: request.id});
-        let path = `${process.cwd()}/public/uploads/${imgFileName}`;
-        await fs.unlinkSync(path)
-        let result = await db.update({_id: request.id }, {$unset: {banner: -1, imgFileName:-1}})
-        ctx.status = 200
-        ctx.body = {
-            status: ctx.status,
-            result
-        }
-    } catch (error) {
-        ctx.body = error
-    }
-}
 module.exports = {
 	save,
-	content,
-	
-    uploadFile,
-	deleteFile,
+	content
 }

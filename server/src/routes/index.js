@@ -57,10 +57,10 @@ router.post('/login',LoginStrategy.login);
 /*控制面板信息*/
 router.post('/system',system.controller);
 
-/*上传接口*/
-router.post('/upload',upload.single('file'), article.uploadFile);
-/*删除图片接口*/
-router.post('/deleteFile', article.deleteFile)
+// /*上传接口*/
+// router.post('/upload',upload.single('file'), article.uploadFile);
+// /*删除图片接口*/
+// router.post('/deleteFile', article.deleteFile)
 
 
 router.get('/cos/sign',cos.sign)

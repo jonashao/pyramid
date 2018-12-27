@@ -1,43 +1,31 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center>
-    <v-flex xs12 sm8 md6>
-
-      <article v-for="post in posts" :key="post._id" class="post-card">
-        <v-layout row style="margin-bottom:2rem">
-          <v-flex xs8 sm9>
-            <div style="padding-right:1rem">
-              <div class="category subtitle">{{ post.category.name }} </div>
-              <nuxt-link :to="`/post/${post._id}`">  
-                <div class="headline" style="margin-top:.5rem;margin-bottom:.5rem">{{ post.title }}</div>
-                <div class="des color-second-text" >{{ post.des }}</div>
-              </nuxt-link>
-              <div style="margin-top:.5rem;margin-bottom:.5rem">
-                {{ post.author }}
-                <div class="color-second-text">
-                  {{ post.time }}
-                </div>
-              </div>
-            </div>
+  <div class="post-card">
+    <v-layout row>
+      <v-flex xs8 sm9>
+          
+        <div>
+          <div class="category subtitle">{{ post.category.name }} </div>
+          <nuxt-link :to="`/post/${post._id}`">  
+            <div class="headline" style="margin-top:.5rem;margin-bottom:.5rem">{{ post.title }}</div>
+            <div class="des " >{{ post.des }}</div>
+          </nuxt-link>
+        </div>
          
-          </v-flex>
-          <v-flex v-if="post.image&&post.image.url" xs4 sm3>
-            <nuxt-link :to="`/post/${post._id}`">  
-              <v-img 
-                :src="post.image.url"
-                :alt="post.image.name"
-                height="125px"
-                width="125px"
-                contain
-                style="max-width:100%;"
-              />
-            </nuxt-link>
-          </v-flex>
-        </v-layout>
-        <!-- <v-divider light/> -->
-        <!-- <v-card-actions class="pa-3">
+      </v-flex>
+      <v-flex xs5 sm3>
+        <nuxt-link :to="`/post/${post._id}`">  
+          <v-img v-if="post.image" 
+                 :src="post.image.url"
+                 :alt="post.image.name"
+                 height="125px"
+                 width="125px"
+                 style="max-width:100%"
+          />
+        </nuxt-link>
+      </v-flex>
+    </v-layout>
+    <v-divider light/>
+    <!-- <v-card-actions class="pa-3">
           Rate this album
           <v-spacer/>
           <v-icon>star_border</v-icon>
@@ -46,51 +34,32 @@
           <v-icon>star_border</v-icon>
           <v-icon>star_border</v-icon>
         </v-card-actions> -->
-      </article>
-    </v-flex>
-  </v-layout>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
-  components: {
-    Logo,
-    VuetifyLogo
-  },
-  data() {
-    return { posts: [] }
-  },
-  mounted() {
-    this.$axios.get('/article/list').then(({ data, status }) => {
-      console.log(data)
-      this.posts = data.list
-      console.log(this.posts)
-    })
-    // 如果存在不需要重复登陆
-    // this.$router.push({
-    //   name: 'post-id',
-    //   params: { id: '5c210c7ccf62ea4d75352133' }
-    // })
+  props: {
+    post: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
   }
 }
 </script>
 
-<style >
+
+
+<style scoped>
 .post-card {
   max-width: 100%;
   width: 700px;
   margin-bottom: 1rem;
 }
-article a {
+.v-card__title a {
   text-decoration: none;
-}
-
-.color-second-text {
-  color: rgba(0, 0, 0, 0.54) !important;
-  fill: rgba(0, 0, 0, 0.54) !important;
 }
 .headline {
   font-style: normal;
@@ -129,6 +98,8 @@ article a {
   line-height: 20px !important;
   --x-height-multiplier: 0.342 !important;
   --baseline-multiplier: 0.22 !important;
+  color: rgba(0, 0, 0, 0.54) !important;
+  fill: rgba(0, 0, 0, 0.54) !important;
 }
 
 .subtitle {

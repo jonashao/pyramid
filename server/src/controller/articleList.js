@@ -1,5 +1,5 @@
 const articleModel = require('../models/article');
-const backArticle = require('../models/backArticleSchema');
+// const backArticle = require('../models/backArticleSchema');
 
 /**
  *public API
@@ -19,7 +19,9 @@ let list = async(ctx)=>{
             conditions.category = category;
         }
         console.log('condition',conditions)
-        let front = await articleModel.find(conditions,{__v:0,content:0,original:0})
+        let front = await articleModel
+            .find(conditions,{__v:0,content:0,original:0})
+            .populate('category')
             .skip(page).limit(pagesize).sort({'_id':-1});
         let frontCount = await articleModel.count(conditions);
         ctx.body = {
@@ -33,46 +35,6 @@ let list = async(ctx)=>{
     }
 }
 
-let frontList = async(ctx)=>{
-    try{
-        let req = ctx.request.query;
-    	let { parseInt } = Number;
-    	let page = parseInt((req.page-1) * req.pagesize);
-    	let pagesize = parseInt(req.pagesize);
-        let front = await articleModel.find({},{__v:0,content:0,original:0}).skip(page).limit(pagesize).sort({'_id':-1});
-        let frontCount = await articleModel.count({});
-        ctx.body = {
-            error: 0,
-            count:frontCount,
-            front
-        }
-    }catch(e){
-        //handle error
-        ctx.body = {error:1,info:e}
-    }
-}
-
-let backList = async(ctx)=>{
-    try{
-        let req = ctx.request.query;
-        let { parseInt } = Number;
-        let page = parseInt((req.page-1) * req.pagesize);
-        let pagesize = parseInt(req.pagesize);
-        let back = await backArticle.find({},{__v:0,content:0,original:0}).skip(page).limit(pagesize).sort({'_id':-1});
-        let backCount = await backArticle.count({});
-        ctx.body = {
-            error: 0,
-            count:backCount,
-            back
-        }
-    }catch(e){
-        //handle error
-        ctx.body = {error:1,info:e}
-    }
-}
-
 module.exports = {
-    list,
-    frontList,
-    backList
+    list
 }

@@ -1,5 +1,5 @@
 const ArticleModel = require('../models/article');
-const backArticle = require('../models/backArticleSchema');
+// const backArticle = require('../models/backArticleSchema');
 
 /**
  * private API

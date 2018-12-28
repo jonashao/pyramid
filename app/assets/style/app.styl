@@ -4,8 +4,26 @@
     background: white;
     color: rgba(0,0,0,0.87);
 }
-
+a   
+    text-decoration: none
+i, cite, em, var, address, dfn, code {
+    font-style: italic;
+    font-weight: 400
+}
+code {
+    background-color: rgba(0,0,0,.05);
+    color: black;
+    white-space: pre-wrap;
+    font-family: Menlo,Monaco,"Courier New",Courier,monospace;
+    font-size: 16px
+    box-shadow: none;
+}
+code:after, kbd:after, code:before, kbd:before{
+    content:''
+}
 .article-content
+    .hljs
+        padding: 0
     font-size: 21px;
     p 
         margin-top: 29px;
@@ -22,7 +40,9 @@
     pre 
         code
             width: 100%
-            background: none
+            font-weight: 400;
+            font-style: normal;
+            // background: none
             padding: 1rem
     blockquote
         display: block;

@@ -45,7 +45,6 @@ let content = async (ctx,next)=>{
 		let req = ctx.request.query;
 		let {id} = req;
 		let result = await ArticleModel.find({_id:id});
-		console.log('result',result)
 		ctx.body = {
 			error:0,
 			info:result

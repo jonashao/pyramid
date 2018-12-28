@@ -39,6 +39,7 @@ module.exports = {
   plugins: [
     '@/plugins/vuetify',
     '@/plugins/highlight',
+    '@/plugins/medium-zoom',
     { src: '@/plugins/lazyload', ssr: true }
   ],
 

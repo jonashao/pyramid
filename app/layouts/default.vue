@@ -1,37 +1,36 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      v-model="drawer"
-      fixed
-      app >
-      <v-list>
-        <v-list-tile
-          v-for="(item, i) in items"
-          :to="item.to"
-          :key="i"
-          router
-          exact
-        >
-          <v-list-tile-action>
-            <v-icon v-html="item.icon" />
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title" />
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-toolbar :clipped-left="clipped" fixed scroll-off-screen app >
-      <v-toolbar-side-icon @click="drawer = !drawer" />
-
-      <v-toolbar-title>
+    <v-layout justify-space-around>
+      <v-flex xs12 sm8 md6>
         <v-btn :to="'/'" flat>
           {{ title }}
         </v-btn>
-      </v-toolbar-title>
-    
+      </v-flex>
+    </v-layout>
+    <v-toolbar :clipped-left="clipped" dense color="white" style="position:sticky" 
+               scroll-off-screen 
+               app >
+      <!-- <v-toolbar-side-icon @click="drawer = !drawer" /> -->
+      <v-layout justify-space-around>
+        <v-flex xs12>
+          <v-tabs
+            slot="extension"
+            v-model="currentItem"
+            centered
+            fixed-tabs
+            show-arrows
+            slider-color="green">
+            <!-- <v-tabs-slider color="yellow"/> -->
+            <v-tab
+              v-for="item in items"
+              :href="'#tab-' + item"
+              :key="item" >
+              {{ item }}
+            </v-tab>
+  
+          </v-tabs>
+        </v-flex>
+      </v-layout>
     </v-toolbar>
     <v-content>
       <v-container>
@@ -52,15 +51,21 @@ export default {
       clipped: true,
       drawer: false,
       fixed: false,
-      items: [
-        { icon: 'apps', title: 'Welcome', to: '/' }
-        // { icon: 'bubble_chart', title: 'Inspire', to: '/inspire' }
-      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "Jonas' Blog"
+      title: "Jonas' Blog",
+      currentItem: 'tab-Web',
+      items: ['Web', 'Shopping', 'Videos', 'Images'],
+      more: ['News', 'Maps', 'Books', 'Flights', 'Apps'],
+      text:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
   }
 }
 </script>
+<style>
+.v-toolbar {
+  box-shadow: 0px 2px 2px -1px rgba(0, 0, 0, 0.2);
+}
+</style>

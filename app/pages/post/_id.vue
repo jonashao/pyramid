@@ -3,7 +3,7 @@
     <div class="title-block">
       <h1 >{{ title }}</h1>
       <div>{{ time }}</div>
-      <div v-if="originUrl"><span>转载自:</span><a :href="originUrl" style="color:green; font-weight:bold">{{ originUrl }}</a> </div>
+      <div v-if="originUrl"><span>转载自:</span><a :href="originUrl" target="_blank" style="color:green; font-weight:bold">{{ originUrl }}</a> </div>
     </div>
  
     <v-img v-if="image" 
@@ -13,22 +13,33 @@
     <div class="desc">{{ des }}</div>
 
     <div class="article-content" v-html="content"/>
-    <!-- <nav-header :active="active"/> -->
-    <!-- <el-row type="flex" justify="center">
-      <el-col :span="14" class="detail_title">
-        <div>{{ title }}</div>
-        <div class="time">发布时间：{{ time }}&nbsp;&nbsp;&nbsp;&nbsp;分类：{{ list === 'Front' ? '前端文章' : '后端文章' }}</div>
-      </el-col>
+    
+    <div class="comments" style="margin-top:5rem">
+      <div class="comment-box">
+        <h2>评论</h2>
+        <v-card>
+          <v-card-title>          
+            <nuxt-link to="/signin">  写评论... </nuxt-link>
+          </v-card-title>
+        </v-card>
+        <!-- <v-form style="margin-top:1rem">
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-text-field
+                v-model="first"
+                disabled
+                solo>
+                <div slot="label">
+                  <nuxt-link to="signin">  写评论... </nuxt-link>
+                
+                </div>
+              </v-text-field>
+            </v-flex>
+          </v-layout>
+        </v-form> -->
+      </div>
 
-    </el-row>
-    <el-row type="flex" justify="center">
-      <el-col :span="14" class="detail_content">
-        <el-card>
-          <div v-show="!content">暂无文章数据...</div>
-          <div class="md markdown-body" v-html="content"/>
-        </el-card>
-      </el-col>
-    </el-row> -->
+    </div>
   </div>
 </template>
 

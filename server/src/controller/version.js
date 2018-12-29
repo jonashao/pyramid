@@ -7,24 +7,24 @@ const versionInsert = require('../models/versionSchema');
  * @return {object|null}  insert version number and version content
 */
 
-let insertVersion = async (ctx,next)=>{
-	try{
-		let req = ctx.request.body;
-		let {version,content} = req;
-		let res = await versionInsert.create({
-			version:version,
-			time:FormatDate(new Date()),
-			content:content
-		})
-		ctx.body = {
-			error:0,
-			success:1
-		}
-	}catch(e){
-		//handle error
-		ctx.body = e;
-	}
-}
+let insertVersion = async (ctx)=>{
+    try{
+        let req = ctx.request.body;
+        let {version,content} = req;
+        let res = await versionInsert.create({
+            version:version,
+            time:FormatDate(new Date()),
+            content:content
+        });
+        ctx.body = {
+            error:0,
+            success:1
+        };
+    }catch(e){
+        //handle error
+        ctx.body = e;
+    }
+};
 
 /**
  * private API
@@ -33,16 +33,16 @@ let insertVersion = async (ctx,next)=>{
 */
 
 let getVersion = async(ctx,next)=>{
-	try{
-		let res = await versionInsert.find({},{__v:0}).sort({_id:-1});
-		ctx.body = {
-			error:0,
-			list:res
-		}
-	}catch(e){
-		ctx.body = e;
-	}
-}
+    try{
+        let res = await versionInsert.find({},{__v:0}).sort({_id:-1});
+        ctx.body = {
+            error:0,
+            list:res
+        };
+    }catch(e){
+        ctx.body = e;
+    }
+};
 
 /**
  *@method Formatate
@@ -52,10 +52,10 @@ let getVersion = async(ctx,next)=>{
 
 function FormatDate (strTime) {
     var date = new Date(strTime);
-	return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 }
 
 module.exports = {
-	insertVersion,
-	getVersion
-}
+    insertVersion,
+    getVersion
+};

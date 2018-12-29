@@ -46,8 +46,8 @@
       </v-flex>
       <v-flex xs12 md6>
         <v-select
-          v-model="article.category"
-          :items="categorys"
+          v-model="article.topic"
+          :items="topics"
           item-text="name"
           item-value="_id"
           label="文章集合"
@@ -122,7 +122,7 @@ export default {
         content: '',
         htmlContent: '',
         date: FormatDate(new Date()),
-        category: '',
+        topic: '',
         contentValue: '',
         des: '',
         original: '',
@@ -145,20 +145,20 @@ export default {
   },
   computed: mapState({
     // 传字符串参数 'count' 等同于 `state => state.count`
-    categorys: state => state.category.all
+    topics: state => state.topic.all
   }),
   created() {
     this.init()
   },
   mounted() {
-    if (this.categories === undefined || !this.categories.length) {
-      this['category/fetch']()
+    if (this.topics === undefined || !this.topics.length) {
+      this['topic/fetch']()
     }
   },
 
   methods: {
     ...mapActions([
-      'category/fetch' // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
+      'topic/fetch' // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
     ]),
     save(date) {
       this.$refs.menu.save(date)
@@ -190,7 +190,7 @@ export default {
           //       original,
           //       time,
           //       list,
-          //       category
+          //       topic
           //     }
           //   ]
           // } = data
@@ -201,8 +201,8 @@ export default {
           //   des,
           //   content: original,
           //   date: time ? time : FormatDate(new Date()),
-          //   category: list,
-          //   category
+          //   topic: list,
+          //   topic
           // })
           this.defaultRequest()
         })
@@ -234,13 +234,13 @@ export default {
     insertArticle() {
       if (this.article.title == '') {
         this.error('文章标题留空无法保存', '请仔细检查文章标题', false)
-      } else if (!this.article.category) {
+      } else if (!this.article.topic) {
         this.error('请选择文章分类', false)
       } else {
         this.$axios.post(`/article/save`, this.article).then(res => {
           let { error } = res.data
           if (Object.is(error, 0)) {
-            this.$router.push({ name: 'admin-category' })
+            this.$router.push({ name: 'admin-topic' })
             this.success('文章发布成功', '', true)
             ;[this.title, this.des, this.original, this.content] = ['']
           } else {
@@ -255,7 +255,7 @@ export default {
       //   data: { result }
       // } = await this.$axios.post('/findOneArticle', {
       //   id: this.$route.params.id,
-      //   category: this.article.category
+      //   topic: this.article.topic
       // })
       // if (Object.is(result.banner, undefined)) {
       //   Object.assign(this.img, { path: '', filename: '' })

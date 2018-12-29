@@ -5,15 +5,15 @@ export const state = () => ({
 export const mutations = {
   setCategoryList(state, list) {
     state.all = list
-    console.log('category all', state)
+    console.log('set topic all', state)
   }
 }
 
 export const actions = {
   async fetch({ commit }) {
-    const { data, status } = await this.$axios.get('/category/list')
+    const { data, status } = await this.$axios.get('/topic/list')
     console.log('list', data)
-    if (status === 200 && !data.error) {
+    if (status === 200 && !data.error && data.list && data.list.length) {
       commit('setCategoryList', data.list)
     }
   }

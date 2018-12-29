@@ -66,23 +66,25 @@ export default {
     let storage = window.sessionStorage
     this.setUserName(storage.getItem('username'))
     let store = this.$store.state.tokenName
-    if (!store) {
-      this.$router.push({ name: 'index' })
-    } else {
-      this.$router.push({ name: 'admin' })
-    }
+    // if (!store) {
+    //   this.$router.push({ name: 'index' })
+    // } else {
+    //   this.$router.push({ name: 'admin' })
+    // }
   },
   methods: {
     // 设置用户名vuex方法
     ...mapMutations(['setUserName']),
     login(username, password) {
       let json = { username, password }
-      this.$axios.post('/login', json).then(res => {
-        let { error, username, msg } = res.data
+      this.$axios.post('/auth/login', json).then(res => {
+        let { error, token, user, msg } = res.data
         if (Object.is(error, 0)) {
           let storage = window.sessionStorage //初始化sessionStorage
-          storage.setItem('username', username)
-          this.setUserName(storage.getItem('username'))
+          storage.setItem('authentication-token', token)
+          this.$axios.setToken(token, 'Bearer')
+
+          // this.setUserName(storage.getItem('username'))
           this.$router.push({ name: 'admin' })
         } else if (Object.is(error, 1)) {
           this.error('用户名错误', msg, false)

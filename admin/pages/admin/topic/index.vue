@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="text-xs-center" style="margin-bottom:1rem"> 
-      <v-btn v-for="c in categories" :key="c._id" 
+      <v-btn v-for="c in topics" :key="c._id" 
              :dark="c._id===selectedCategory"
              :color="c._id===selectedCategory? c.color?c.color:'dark':null" round @click="filter(c)">
         {{ c.name }}</v-btn>
-      <v-btn round to="/admin/category/list">更多</v-btn>
+      <v-btn round to="/admin/topic/list">更多</v-btn>
     </div>
     <v-layout row wrap type="flex" justify="center">
  
@@ -90,7 +90,7 @@ export default {
   },
   computed: mapState({
     // 传字符串参数 'count' 等同于 `state => state.count`
-    categories: state => state.category.all
+    topics: state => state.topic.all
   }),
   watch: {
     pagination: {
@@ -107,20 +107,20 @@ export default {
   },
   mounted() {
     this.getDataFromApi()
-    this['category/fetch']()
+    this['topic/fetch']()
   },
   methods: {
     ...mapActions([
-      'category/fetch', // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
+      'topic/fetch', // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
 
       // `mapActions` 也支持载荷：
       'incrementBy' // 将 `this.incrementBy(amount)` 映射为 `this.$store.dispatch('incrementBy', amount)`
     ]),
     moreCategories() {
-      this.$router.push({ name: 'admin-category-list' })
+      this.$router.push({ name: 'admin-topic-list' })
     },
-    filter(category) {
-      this.selectedCategory = category._id
+    filter(topic) {
+      this.selectedCategory = topic._id
       this.getDataFromApi()
     },
     getDataFromApi() {

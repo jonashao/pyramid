@@ -1,4 +1,4 @@
-let crypto = require("crypto");
+let crypto = require('crypto');
 
 
 /**
@@ -10,4 +10,4 @@ module.exports = (pwd)=>{
     var sha256 = crypto.createHash('sha256');
     var password = sha256.update(pwd).digest('hex');
     return password;
-}
+};

@@ -41,6 +41,7 @@ module.exports = {
   plugins: [
     '@/plugins/vuetify',
     '@/plugins/cos',
+    '@/plugins/axios',
     { src: '~plugins/mavon-editor', ssr: false }
   ],
 

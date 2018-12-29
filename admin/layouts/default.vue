@@ -60,7 +60,7 @@ export default {
       items: [
         { icon: 'apps', title: '欢迎', to: '/admin' },
         { icon: 'bubble_chart', title: '文章', to: '/admin/article' },
-        { icon: 'bookmark', title: '列表', to: '/admin/category' }
+        { icon: 'bookmark', title: '列表', to: '/admin/topic' }
       ],
       miniVariant: false,
       right: true,

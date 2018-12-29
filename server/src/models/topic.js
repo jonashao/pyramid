@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const db = require('./db');
 let articleSchema = new mongoose.Schema({
-	name: String,
-	image: String
+    name: String,
+    image: String
 });
 
-let articleModel = db.model('category',articleSchema);
+let articleModel = db.model('topic',articleSchema);
 
 module.exports = articleModel;

@@ -32,10 +32,12 @@
   
     <template v-if="state === 'login-email'">
       <v-layout column>
-        <v-text-field
-          label="电子邮箱"
-          placeholder=""
-        />
+        <v-flex xs8> 
+          <v-text-field
+            label="电子邮箱"
+            placeholder=""
+          />
+        </v-flex>
       </v-layout>
       
       <v-layout align-center justify-center>

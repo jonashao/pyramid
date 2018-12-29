@@ -2,7 +2,7 @@
   <div>
     <v-container fluid grid-list-xs>
       <v-layout style="margin-left:-16px;margin-right:-16px;" row >
-        <v-flex v-for="c in categories" :key="c._id" md2 sm4 xs6>
+        <v-flex v-for="c in topics" :key="c._id" md2 sm4 xs6>
           
           <v-card color="blue-grey darken-2" class="white--text">
             <v-card-title primary-title>
@@ -62,7 +62,7 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 >
-                  <v-text-field v-model="category.name" name="name" outline label="名称*" required/>
+                  <v-text-field v-model="topic.name" name="name" outline label="名称*" required/>
                 </v-flex>
                 <v-flex xs12 >
                   <v-text-field name="image" outline label="图片" />
@@ -72,7 +72,7 @@
                 </v-flex>
                 <v-flex xs12>
                   <v-textarea
-                    :value="category.desc"
+                    :value="topic.desc"
                     outline
                     name="desc"
                     label="描述"
@@ -105,26 +105,26 @@ export default {
     return {
       dialog: false,
       deleteDialog: false,
-      category: {}
+      topic: {}
     }
   },
   computed: mapState({
     // 传字符串参数 'count' 等同于 `state => state.count`
-    categories: state => state.category.all
+    topics: state => state.topic.all
   }),
   mounted() {
-    if (this.categories === undefined || !this.categories.length) {
-      this['category/fetch']()
+    if (this.topics === undefined || !this.topics.length) {
+      this['topic/fetch']()
     }
   },
   methods: {
     ...mapActions([
-      'category/fetch' // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
+      'topic/fetch' // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
     ]),
     deleteCategory(c) {
-      this.$axios.delete(`category/${c._id}`).then(({ status, data }) => {
+      this.$axios.delete(`topic/${c._id}`).then(({ status, data }) => {
         if (status === 200 && data.ok) {
-          this['category/fetch']()
+          this['topic/fetch']()
           this.$store.commit('snackbar/setState', {
             show: true,
             text: `成功删除文章分类${c.name ? c.name : '未命名'}`
@@ -133,25 +133,23 @@ export default {
       })
     },
     modify(c) {
-      this.category = c
+      this.topic = c
       this.dialog = true
     },
     save() {
-      this.$axios
-        .post('/category/save', this.category)
-        .then(({ status, data }) => {
-          if (status === 200 && data.success) {
-            this['category/fetch']()
-            this.$store.commit('snackbar/setState', {
-              show: true,
-              text: `成功创建文章分类${
-                this.category.name ? this.category.name : '未命名'
-              }`
-            })
-            this.dialog = false
-            this.category = {}
-          }
-        })
+      this.$axios.post('/topic/save', this.topic).then(({ status, data }) => {
+        if (status === 200 && data.success) {
+          this['topic/fetch']()
+          this.$store.commit('snackbar/setState', {
+            show: true,
+            text: `成功创建文章分类${
+              this.topic.name ? this.topic.name : '未命名'
+            }`
+          })
+          this.dialog = false
+          this.topic = {}
+        }
+      })
     }
   }
 }

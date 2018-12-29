@@ -8,25 +8,25 @@ const ArticleModel = require('../models/article');
  * @return {object|null}  return {n:0,ok:0}
 */
 
-let delArticle = async (ctx,next)=> {
-	try{
-		const id = ctx.params.id
-		console.log('id',id)
-		let res = await ArticleModel.deleteOne({_id:id});
-		let {n,ok} = res;
-		ctx.body = {
-			del:n,
-			ok
-		}
-	}catch(e){
-		ctx.body = {
-			error:1,
-			info:e
-		};
-	}
-}
+let delArticle = async (ctx)=> {
+    try{
+        const id = ctx.params.id;
+        console.log('id',id);
+        let res = await ArticleModel.deleteOne({_id:id});
+        let {n,ok} = res;
+        ctx.body = {
+            del:n,
+            ok
+        };
+    }catch(e){
+        ctx.body = {
+            error:1,
+            info:e
+        };
+    }
+};
 
 
 module.exports = {
-	delArticle
-}
+    delArticle
+};

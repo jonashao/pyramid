@@ -1,19 +1,21 @@
 <template>
   <div class="section-column">
     <div class="title-block">
-      <h1 >{{ title }}</h1>
-      <div>{{ time }}</div>
-      <div v-if="originUrl"><span>转载自:</span><a :href="originUrl" target="_blank" style="color:green; font-weight:bold">{{ originUrl }}</a> </div>
+      <div class="text-xs-center desc">{{ time }}</div>
+      <h1 class="text-xs-center">{{ title }}</h1>
+
+      <div class="desc text-xs-center">{{ des }}</div>
     </div>
  
     <v-img v-if="image" 
            :src="image.url"
            :alt="image.name"
            contain />
-    <div class="desc">{{ des }}</div>
 
     <div class="article-content" v-html="content"/>
-    
+    <div v-if="originUrl"><span>转载自:</span>
+      <a :href="originUrl" target="_blank" style="color:green; font-weight:bold;word-break: break-word;">{{ originUrl }}</a> 
+    </div>
     <div class="comments" style="margin-top:5rem">
       <div class="comment-box">
         <h2>评论</h2>
@@ -51,7 +53,7 @@ export default {
       params: json
     })
     let { error, info } = result.data
-    console.log('info', info)
+    // console.log('info', info)
     if (info && info.length) {
       let { content, des, list, time, title, image, originUrl } = info[0]
       return { title, des, content, list, time, image, originUrl }
@@ -99,8 +101,7 @@ export default {
 }
 
 .desc {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin: 2rem 0;
   font-size: 1.25rem;
   color: rgb(128, 128, 128);
 }

@@ -9,12 +9,16 @@
         <v-layout row style="margin-bottom:2rem">
           <v-flex xs8 sm9>
             <div style="padding-right:1rem">
-              <div class="category subtitle">{{ post.category.name }} </div>
+              <div class="topic subtitle">
+                <template v-if="post.topic">   
+                  {{ post.topic.name }} 
+                </template>
+              </div>
               <nuxt-link :to="`/post/${post._id}`">  
                 <div class="headline" style="margin-top:.5rem;margin-bottom:.5rem">{{ post.title }}</div>
                 <div class="des color-second-text" >{{ post.des }}</div>
               </nuxt-link>
-              <div style="margin-top:.5rem;margin-bottom:.5rem">
+              <div style="margin-top:.5rem;margin-bottom:.5rem;font-size:15px">
                 {{ post.author }}
                 <div class="color-second-text">
                   {{ post.time }}
@@ -65,15 +69,9 @@ export default {
   },
   mounted() {
     this.$axios.get('/article/list').then(({ data, status }) => {
-      console.log(data)
       this.posts = data.list
       console.log(this.posts)
     })
-    // 如果存在不需要重复登陆
-    // this.$router.push({
-    //   name: 'post-id',
-    //   params: { id: '5c210c7ccf62ea4d75352133' }
-    // })
   }
 }
 </script>

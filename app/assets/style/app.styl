@@ -1,12 +1,24 @@
 // Import Vuetify styling
 @require '~vuetify/src/stylus/main.styl'
+body
+    color: rgba(0,0,0,.84);
+    letter-spacing: 0;
+    font-weight: 400;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -moz-font-feature-settings: "liga" on;
+    color: rgba(0,0,0,.84);
+    font-size: 20px;
+    line-height: 1.4;
 .theme--light.application {
     background: white;
     color: rgba(0,0,0,0.87);
 }
 a   
     text-decoration: none
-i, cite, em, var, address, dfn, code {
+i, cite, em, var, address, dfn {
     font-style: italic;
     font-weight: 400
 }
@@ -15,8 +27,10 @@ code {
     color: black;
     white-space: pre-wrap;
     font-family: Menlo,Monaco,"Courier New",Courier,monospace;
-    font-size: 16px
+    // font-size: 16px
     box-shadow: none;
+    font-weight: 400
+    word-break: break-word;
 }
 code:after, kbd:after, code:before, kbd:before{
     content:''
@@ -25,6 +39,10 @@ code:after, kbd:after, code:before, kbd:before{
     .hljs
         padding: 0
     font-size: 21px;
+
+    pre,figure,blockquote
+        margin-top: 43px;
+
     p 
         margin-top: 29px;
         --x-height-multiplier: 0.375;
@@ -35,15 +53,30 @@ code:after, kbd:after, code:before, kbd:before{
         font-size: 21px;
         line-height: 1.58;
         letter-spacing: -.003em;
+  
     h1,h2,h3
-        margin-top: 39px
+        font-size: 1.5rem;
+        margin-bottom: .5rem;
+        margin-top: 56px
+        font-size: 34px;
+        line-height: 1.15;
+        letter-spacing: -.015em;
+    h4  
+        font-size: 26px;
+        line-height: 1.22;
+        letter-spacing: -.012em;
+        margin-top: 31px;
+
+        
     pre 
         code
             width: 100%
             font-weight: 400;
             font-style: normal;
             // background: none
+            word-break: break-word;
             padding: 1rem
+            font-size: 16px;
     blockquote
         display: block;
         margin-block-start: 1em;
@@ -55,7 +88,6 @@ code:after, kbd:after, code:before, kbd:before{
         --baseline-multiplier: 0.17;
         letter-spacing: .01rem;
         font-weight: 400;
-        font-style: italic;
         font-size: 21px;
         line-height: 1.58;
         letter-spacing: -.003em;

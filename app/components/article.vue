@@ -4,7 +4,7 @@
       <v-flex xs8 sm9>
           
         <div>
-          <div class="category subtitle">{{ post.category.name }} </div>
+          <div class="topic subtitle">{{ post.topic.name }} </div>
           <nuxt-link :to="`/post/${post._id}`">  
             <div class="headline" style="margin-top:.5rem;margin-bottom:.5rem">{{ post.title }}</div>
             <div class="des " >{{ post.des }}</div>

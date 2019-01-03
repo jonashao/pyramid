@@ -12,6 +12,7 @@
       },
       "env_production": {
         "NODE_ENV": "production",
+        "BASE_URL": "https://www.junnanhao.com",
         "PORT": 3001,
         "HOST": "0.0.0.0"
       },

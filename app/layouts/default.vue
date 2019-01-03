@@ -1,34 +1,15 @@
 <template>
   <v-app>
-    <v-layout justify-space-around>
-      <v-flex xs12 sm8 md6>
-        <v-btn :to="'/'" flat>
-          {{ title }}
-        </v-btn>
-      </v-flex>
-    </v-layout>
-    <v-toolbar :clipped-left="clipped" dense color="white" style="position:sticky" 
+ 
+    <v-toolbar dense color="white" style="position:sticky" 
                scroll-off-screen 
                app >
       <!-- <v-toolbar-side-icon @click="drawer = !drawer" /> -->
       <v-layout justify-space-around>
-        <v-flex xs12>
-          <v-tabs
-            slot="extension"
-            v-model="currentItem"
-            centered
-            fixed-tabs
-            show-arrows
-            slider-color="green">
-            <!-- <v-tabs-slider color="yellow"/> -->
-            <v-tab
-              v-for="item in items"
-              :href="'#tab-' + item"
-              :key="item" >
-              {{ item }}
-            </v-tab>
-  
-          </v-tabs>
+        <v-flex xs12 sm8 md6>
+          <v-btn :to="'/'" flat>
+            {{ title }}
+          </v-btn>
         </v-flex>
       </v-layout>
     </v-toolbar>
@@ -38,8 +19,9 @@
       </v-container>
     </v-content>
 
-    <v-footer :fixed="fixed" >
-      <span>&copy; 2019</span>
+    <v-footer >
+      <p>&copy; 2019 <br></p><br>
+      <p>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
     </v-footer>
   </v-app>
 </template>
@@ -48,18 +30,9 @@
 export default {
   data() {
     return {
-      clipped: true,
-      drawer: false,
-      fixed: false,
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
       title: "Jonas' Blog",
       currentItem: 'tab-Web',
-      items: ['Web', 'Shopping', 'Videos', 'Images'],
-      more: ['News', 'Maps', 'Books', 'Flights', 'Apps'],
-      text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      items: ['Web', 'Shopping', 'Videos', 'Images']
     }
   }
 }

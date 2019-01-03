@@ -57,8 +57,9 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
     baseURL:
       process.env.NODE_ENV === 'production'
-        ? 'http://120.78.221.76:8000/api'
-        : 'http://localhost:8000/api'
+        ? 'https://www.junnanhao.com/api'
+        : 'https://www.junnanhao.com/api'
+    // : 'http://localhost:8000/api'
   },
 
   /*
@@ -79,6 +80,15 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+
+      const svgRule = config.module.rules.find(rule => rule.test.test('.svg'))
+
+      svgRule.test = /\.(png|jpe?g|gif|webp)$/
+
+      config.module.rules.push({
+        test: /\.svg$/,
+        loader: 'vue-svg-loader'
+      })
     }
   }
 }

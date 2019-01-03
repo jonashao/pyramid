@@ -3,7 +3,8 @@ const pkg = require('./package')
 module.exports = {
   mode: 'spa',
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:8000'
+    // baseUrl: process.env.BASE_URL || 'https://localhost:8000'
+    baseUrl: 'https://www.junnanhao.com'
   },
   /*
   ** Headers of the page
@@ -58,10 +59,10 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     baseURL:
-      process.env.NODE_ENV === 'production'
-        ? 'http://120.78.221.76:8000/api'
-        : 'http://localhost:8000/api'
-    // 'http://120.78.221.76:8000/api'
+      // process.env.NODE_ENV === 'production'
+      //   ? 'https://www.junnanhao.com/api'
+      //   : 'http://localhost:8000/api'
+      'https://www.junnanhao.com/api'
   },
   /*
   ** Build configuration

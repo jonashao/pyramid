@@ -73,14 +73,31 @@ function(token, tokenSecret, profile, done) {
 ));
 
 
-const GoogleStrategy = require('passport-google-auth').Strategy;
+// const GoogleStrategy = require('passport-google-auth').Strategy;
+// passport.use(new GoogleStrategy({
+//     clientId: 'your-client-id',
+//     clientSecret: 'your-secret',
+//     callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/google/callback'
+// },
+// function(token, tokenSecret, profile, done) {
+//     // retrieve user ...
+//     fetchUser().then(user => done(null, user));
+// }
+// ));
+
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 passport.use(new GoogleStrategy({
-    clientId: 'your-client-id',
-    clientSecret: 'your-secret',
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/google/callback'
 },
-function(token, tokenSecret, profile, done) {
-    // retrieve user ...
-    fetchUser().then(user => done(null, user));
+function(accessToken, refreshToken, profile, cb) {
+    console.log('accessToken',accessToken);
+    console.log('refreshToken',refreshToken);
+    console.log('profile',profile);
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        return cb(err, user);
+    });
 }
 ));

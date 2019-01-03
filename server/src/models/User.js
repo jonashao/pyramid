@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const db = require('./db');
 
 let userSchema = new mongoose.Schema({
+    googleId:String,
     username:String,
     password:String
 });

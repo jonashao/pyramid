@@ -10,6 +10,7 @@
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js --watch ./",
     "start": "cross-env NODE_ENV=production node ./src/index.js",
     "generate": "nuxt generate",
+    "prod":"pm2 start pm2.json --env production",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
@@ -34,6 +35,7 @@
     "mongoose": "^5.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-auth": "^1.0.2",
+    "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "qcloud-cos-sts": "^2.0.6"

@@ -32,6 +32,40 @@ router.post('/login', async (ctx) => {
     })(ctx);
 });
 
+// router.get('/auth/google',
+//     passport.authenticate('google', { scope: ['profile'] }));
+
+// router.get('/auth/google/callback', 
+//     passport.authenticate('google', { failureRedirect: '/login' }),
+//     function(ctx) {
+//     // Successful authentication, redirect home.
+//         console.log('google success');
+//         ctx.redirect('/');
+//     });
+/**
+ * Google authentication route
+ * 
+ * @param 
+ * @returns
+ */
+router.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile'] },(err)=>{
+        console.log(err);
+    })
+);
+
+/**
+ * Google authentication callback
+ * 
+ * @param
+ * @returns
+ */
+router.get('/auth/google/callback',
+    passport.authenticate('google', {
+        successRedirect: '/users/auth/authenticated',
+        failureRedirect: '/'
+    })
+);
 router.post('/profile', passport.authenticate('jwt', { session: false }),
     (ctx) =>{
         console.log(ctx.state.user);
@@ -86,28 +120,7 @@ router.get('/auth/authenticated', authenticated(), async (ctx, next) => {
     ctx.body = { msg: 'Authenticated', user: ctx.state.user };
 });
 
-/**
- * Google authentication route
- * 
- * @param 
- * @returns
- */
-router.get('/auth/google',
-    passport.authenticate('google')
-);
 
-/**
- * Google authentication callback
- * 
- * @param
- * @returns
- */
-router.get('/auth/google/callback',
-    passport.authenticate('google', {
-        successRedirect: '/users/auth/authenticated',
-        failureRedirect: '/'
-    })
-);
 
 /**
  * Facebook authentication route

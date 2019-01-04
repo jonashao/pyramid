@@ -39,7 +39,15 @@
     </v-content>
 
     <v-footer :fixed="fixed" >
-      <span>&copy; 2019</span>
+      <v-layout justify-center>
+        <span>&copy; 2019</span>
+        <span>
+          <a target="_blank" href="http://www.miitbeian.gov.cn/">
+            粤ICP备19000494号-1
+          </a>
+        </span>
+      </v-layout>
+      
     </v-footer>
   </v-app>
 </template>
@@ -67,5 +75,8 @@ export default {
 <style>
 .v-toolbar {
   box-shadow: 0px 2px 2px -1px rgba(0, 0, 0, 0.2);
+}
+footer span {
+  margin: 0 1rem;
 }
 </style>
